@@ -21,6 +21,44 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+// socket.io
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+let connection_count = 0;
+io.on('connection', (socket) => {
+  let added_user = false;
+
+  // add user count when user input name
+  socket.on('add user', (data) => {
+    if (added_user) return;
+
+    added_user = true;
+    socket.username = data.name;
+    socket.user_color = data.user_color;
+    connection_count++;
+
+    socket.emit('login', connection_count);
+    socket.broadcast.emit('refresh count', connection_count);
+  });
+
+  // send message to client
+  socket.on('send message', (msg) => {
+    socket.broadcast.emit('show message', {
+      name      : socket.username,
+      msg       : msg,
+      user_color: socket.user_color
+    });
+  });
+
+  // disconnect subtract connection count
+  socket.on('disconnect', () => {
+    if (added_user) {
+      socket.broadcast.emit('refresh count', --connection_count);
+    }
+  });
+});
+
 /**
  * Listen on provided port, on all network interfaces.
  */

@@ -4,12 +4,39 @@ body {
 .content {
     position: relative;
     border: 3px solid lightsteelblue;
-    padding: 30px 30px 0 30px;
+    padding: 0 0 52px 0;
     height: 100vh;
     background-color: white;
 }
-
 #message {
     border: 3px black solid;
     border-radius: 8px;
+}
+.connection_info {
+    right: 0;
+    padding-top: 5px;
+    padding-right: 30px;
+    position: absolute;
+    font-size: 20px;
+}
+#messages .text {
+    vertical-align: middle;
+}
+#messages{
+    height: 100%;
+    list-style: none;
+    padding: 30px 30px 30px 30px;
+    overflow-y: scroll;
+}
+#messages li {
+    font-size: 35px;
+}
+.swal2-popup {
+    font-size: 2rem;
+}
+
+@media only screen and (max-width: 1024px) {
+    #messages {
+        padding: 30px 15px 30px 15px;
+    }
 }
