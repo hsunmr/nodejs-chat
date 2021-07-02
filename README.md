@@ -5,7 +5,7 @@
 Usage
 ```
 npm install
-node start
+npm start
 ```
 
 ## Demo
